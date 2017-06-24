@@ -1,3 +1,4 @@
+
 package util
 import java.io.{File,FileInputStream,FileOutputStream,InputStream,OutputStream,IOException};
 import java.util.zip.{ZipFile,ZipEntry,ZipInputStream}
@@ -9,9 +10,11 @@ import util.dirDeal
 object xmlParser {
     /*Generate the dataframe source.*/
     def getData(source:File,shareStringFile:File):Array[Array[String]]={
-           val shareStrings:Array[String] =((XML.loadFile(shareStringFile) \ "si") \ "t").
+           
+          val shareStrings:Array[String] =((XML.loadFile(shareStringFile) \ "si") \ "t").
              map(_.text).toArray
-           def mapping(elem:xmlNode):String={
+             
+          def mapping(elem:xmlNode):String={
                if (elem.attributes("t")==null){
                   elem.text
                 }
@@ -19,12 +22,13 @@ object xmlParser {
                  shareStrings(augmentString(elem.text).toInt)
                 }
               }
+          
           ((XML.loadFile(source) \ "sheetData" ) \ "row").
-            map{(row)=>(row \ "c").map(mapping(_) ).toArray}.toArray
-        }
+            map{ (row)=>(row \ "c").map(mapping(_)) .toArray }.toArray
+        
+     }
 }
-
-object getZipped {
+object xlsx {
     def unzipXlsxFile(input:String,output:String,dictArgs:immuMap[String,Any]=immuMap()):Unit={
         /*unzip a xlsx file into a directory */
 
@@ -47,40 +51,44 @@ object getZipped {
             var entry: ZipEntry = zipin.getNextEntry()
             if (entry==pass) {pass} /* if the  */
             else{
-              if (verbose) println(entry.getName)
+              
+              if (verbose) println(entry.getName) 
+              
               ((file:File)=> {
-              if (filter!=null && !filter(file.getAbsolutePath()) ) {pass}
-              else if  (
-                   ( if (! file.getParentFile().exists() ){file.getParentFile().mkdirs();true} else false)
-                   ||
-                   (!file.exists())                       /*for optimization*/
-                  )
-                {
-                 try{
-                   /* some item in the zipped file doesn't exist really
-                    * so use try to ignore
-                    */
-                   file.createNewFile();
-                   var input:InputStream = zipFile.getInputStream(entry)
-                   var fileOut:FileOutputStream=new FileOutputStream(file)
-                   while( ((readInstream:InputStream)=>{val readin=readInstream.read(); if (readin != (-1) ){ fileOut.write(readin);true} else false} ) (input)
-                        ) {/*pass*/}
-                   fileOut.close()
-                   input.close()
-                    }
-                  catch
+                
+                if (filter!=null && !filter(file.getAbsolutePath()) ) {pass}
+              
+                else if  (
+                     ( if (! file.getParentFile().exists() ){file.getParentFile().mkdirs();true} else false)
+                     ||
+                     (!file.exists())                       /*for optimization*/
+                         )
                     {
-                     case e:IOException=>{pass}
+                     try{
+                     /* some item in the zipped file doesn't exist really...
+                      * so use try to ignore
+                      */
+                     file.createNewFile();
+                     var input:InputStream = zipFile.getInputStream(entry)
+                     var fileOut:FileOutputStream=new FileOutputStream(file)
+                     while( ((readInstream:InputStream)=>{val readin=readInstream.read(); if (readin != (-1) ){ fileOut.write(readin);true} else false} ) (input)
+                        ) {/*pass*/}
+                     fileOut.close()
+                     input.close()
+                      }
+                    catch
+                      {
+                       case e:IOException=>{pass}
                           /* if this item doesn't exists, ignore it.*/
-                     case _:Throwable=> throws
-                     }
-                 }
-              pass
-              })(new File (outputFix+entry.getName()))
-           entry
-          }
-          })(zipInput)
-          ){/*pass*/}
+                       case _:Throwable=> throws
+                       }
+                   }
+                pass
+                })(new File (outputFix+entry.getName()))
+             entry
+            }
+            })(zipInput)
+            ){/*pass*/}
 
         zipFile.close()
         zipInput.close()
@@ -96,8 +104,10 @@ object getZipped {
       while (CurrentDir.contains(tempPath)) tempPath+="$"  /*geneate a file whose name is not reduplicated*/
 
       tempPath = parentDirectory+"/"+tempPath
-      unzipXlsxFile(path,tempPath,immuMap("filter"->((x:String)=> x.contains("xl\\worksheets")|| x.contains("xl\\sharedStrings.xml") )))
-
+      
+      unzipXlsxFile(path,tempPath,immuMap( "filter"-> //filter the file whose name does not contain any item in ["xl\worksheets" , "xl\shareString.xml"] 
+                   ((x:String)=> x.contains("xl\\worksheets")|| x.contains("xl\\sharedStrings.xml") )))
+      
       val sharedString =tempPath + "/xl/sharedStrings.xml"
       val sourcePath=tempPath+"/xl/worksheets/"
       val taskFile:File = new File(sourcePath)
@@ -109,14 +119,13 @@ object getZipped {
 
     def parseXmlFile(files:Array[File],shareStringFile:File):Array[Array[Array[String]]]={
       refArrayOps(files).map(xmlParser.getData(_,shareStringFile))
-
-
     }
     def main(args:Array[String]):Unit={  //Test
-      var df =parseXlsx("C:/Users/thautwarm/Desktop/demo/p.xlsx").map(_.map(_.toList).toList).toList
+      var df =parseXlsx("F:/Supports/1.xlsx").map(_.map(_.toList).toList).toList
       println(df)
 //      unzipXlsxFile("C:/Users/thautwarm/Desktop/demo/mas.xlsx","C:/Users/thautwarm/Desktop/demo/mas_unzip",immuMap("filter"->((x:String)=> x.contains("xl\\worksheets"))))
       }
 
 
 }
+    
