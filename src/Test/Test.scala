@@ -3,10 +3,7 @@ import scala.language.implicitConversions
 import user.dataFrame.Series
 import util.config._
 import util.fileDeal.csv
-import scala.compat.Platform.currentTime
-
 object Test extends App{
-
    val path= raw"H:\Kaggle\TitanicDisaster\test.csv"
    val all = csv.read(path)
    println(all(0).toList)
@@ -21,9 +18,10 @@ object Test extends App{
    println(series.name)
    println(series.nanmean(true)())
    println(series.nansum(true)())
+   println(series.nanocm(order=2,true)())  // variance
    
  
-   
+ import scala.compat.Platform.currentTime
  def time(cnt: Int)(call : => Unit): Long = {
         val start = System.currentTimeMillis
         (1 to cnt) foreach (_ => call)

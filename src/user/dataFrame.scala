@@ -102,7 +102,7 @@ object dataFrame {
       }): () => Double
       
  
-//for n-order center moment . variance is the  "2-order center monent"
+//for n-order center moment . variance is the  "2-order center moment"
   def ocm(order: Int, isPar: Boolean)=
       (status match {
         case null => null
