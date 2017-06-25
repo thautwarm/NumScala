@@ -39,7 +39,7 @@ object dataFrame {
       }
     val mean = (isPar: Boolean) =>
       (status match {
-        case null => () => { println("This Series is not Numeric!"); 0.0 }
+        case null => null// () => { println("This Series is not Numeric!"); 0.0 }
         case true =>
           {
             def lambda() =
