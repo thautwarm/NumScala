@@ -118,9 +118,9 @@ object fileDeal {
   }
   object csv {
 
-    def read(source: File, sep: Char = ','): Array[Array[Any]] = {
+    def read(path: String, sep: Char = ','): Array[Array[Any]] = {
       val buffer = ArrayBuffer[ArrayBuffer[Any]]()
-      val bufferString = Source.fromFile(source)
+      val bufferString = Source.fromFile(path)
 
       def parse(row: String) = {
         var incell: Boolean = false
@@ -176,14 +176,10 @@ object fileDeal {
             Go(unparsed, res += parsed)
           }
         }
-
         Go(row)
       }
-
       bufferString.getLines().toArray.map(parse(_).toArray)
-
     }
-
   }
 
 }
