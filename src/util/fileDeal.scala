@@ -9,6 +9,8 @@ import scala.xml.{ XML, Node => xmlNode }
 import scala.io.Source
 import scala.annotation.tailrec
 
+import util.baseCalc.splitAt
+
 object fileDeal {
   val pass = null /* something like keywords which might look graceful */
 
@@ -122,6 +124,9 @@ object fileDeal {
       val buffer = ArrayBuffer[ArrayBuffer[Any]]()
       val bufferString = Source.fromFile(path)
 
+      //debug
+      //      var tol=0
+
       def parse(row: String) = {
         var incell: Boolean = false
         var readyOut: Boolean = false
@@ -146,12 +151,14 @@ object fileDeal {
           var i = 0
           for (chr <- str) {
             if (chr == ' ') { pass };
-            else if (!incell && chr == '"')
-              incell = true
+            else if (!incell && chr == ',')
+              return (i, incell)
+            else if (!incell && chr == '"') { incell = true; readyOut = false }
+            else if (incell && (chr == '"'))
+              readyOut = true
             else if (incell && readyOut && sepEnum.apply(chr))
               return (i, incell)
-            else if (incell && (chr == '"'))
-              readyOut = false
+
             i += 1
           }
           (-1, incell)
@@ -161,14 +168,14 @@ object fileDeal {
           getSplitIndexOf(str) match {
             case (-1, incell) => (if (incell) dealWithQuote(str) else str, "")
             case (idx: Int, incell) => {
-              val (parsed, unparsed) = str.splitAt(idx)
+              val (parsed, unparsed) = splitAt(str, idx)
               (if (incell) dealWithQuote(parsed) else parsed, unparsed)
 
             }
           }
         }
 
-        @tailrec
+        //        @tailrec
         def Go(str: String, res: ArrayBuffer[Any] = ArrayBuffer()): ArrayBuffer[Any] = {
           if (str == "") res
           else {

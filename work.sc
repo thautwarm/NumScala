@@ -1,22 +1,14 @@
 import scala.language.implicitConversions
 import util.config._
-import util.baseCalc.tools.sumWith
 import scala.compat.Platform.currentTime
+import util.baseCalc.splitAt
 object work{
-		val a:Vector[Int]=Vector.range(0, 200000, 3)
+		 
+		 val a=List(1,2,3)                //> a  : List[Int] = List(1, 2, 3)
+		 
+		val b:Int=1                       //> b  : Int = 1
 		
-		def run(t:Boolean)={
-		sumWith(a,(x:Int)=>x+1,t)
-		}
-		var t= currentTime
-		run(true)
-		println(t-currentTime)
-		
-
-	
-		 
-		 
-		 
+		b then ((x:Int)=>x+1)
 		
 		
 

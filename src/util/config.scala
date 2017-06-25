@@ -1,5 +1,4 @@
 package util
-import scala.language.implicitConversions
 object config {
 
   val DoubleClass = new java.lang.Double(0.0).getClass 
@@ -8,8 +7,14 @@ object config {
   val FloatClass = new java.lang.Float(10e0).getClass
   val StringClass = new java.lang.String("").getClass
   
-   def  Dict[K,V](keys:Seq[K], values:Seq[V]) =  (keys zip values) toMap
+  def  Dict[K,V](keys:Seq[K], values:Seq[V]) =  (keys zip values) toMap
    
+  implicit class middleFunc[T](arg:T){
+      def then[G](f:T=>G){
+        f(arg)
+      }
+    
+  }
    
 
 }
