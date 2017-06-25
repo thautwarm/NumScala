@@ -9,5 +9,5 @@ Like *Pandas* in Python, or *Dataframe* in R.
 Requirements
 ----------
 
-- scala 2.12.2
-- scala xml
+- Scala 2.12.2
+- scala-xml_2.12
