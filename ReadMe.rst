@@ -11,3 +11,11 @@ Requirements
 
 - Scala 2.12.2
 - scala-xml_2.12
+
+
+
+Progress
+---------
+
+- `xlsx and csv Parser <https://github.com/thautwarm/NumScala/blob/master/src/util/fileDeal.scala>`_
+- ...
