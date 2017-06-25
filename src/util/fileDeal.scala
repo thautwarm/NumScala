@@ -11,6 +11,7 @@ import scala.annotation.tailrec
 
 object fileDeal {
   val pass = null /* something like keywords which might look graceful */
+
   object xlsx {
 
     /*Generate the dataframe source.*/
@@ -117,7 +118,7 @@ object fileDeal {
   }
   object csv {
 
-    def TextParser(source: File, sep: Char = ','): Array[Array[Any]] = {
+    def read(source: File, sep: Char = ','): Array[Array[Any]] = {
       val buffer = ArrayBuffer[ArrayBuffer[Any]]()
       val bufferString = Source.fromFile(source)
 
