@@ -19,4 +19,5 @@ Progress
 
 - `xlsx and csv Parser <https://github.com/thautwarm/NumScala/blob/master/src/util/fileDeal.scala>`_
 - `DataFrame and Series(not finished yet) <https://github.com/thautwarm/NumScala/blob/master/src/user/dataFrame.scala>`_
+- `linalg.MatLib <https://github.com/thautwarm/NumScala/blob/master/src/linalg/matLib.scala>`_
 - ...
