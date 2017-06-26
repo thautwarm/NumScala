@@ -1,5 +1,5 @@
 package Test
-import user.dataFrame.{NumberSeries,LiteralSeries}
+import user.dataFrame.{NumericSeries,LiteralSeries}
 import util.fileDeal.csv
 import util.config.{ NSInt, NSLong, NSDouble, NSString }
 object Test extends App {

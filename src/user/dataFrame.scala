@@ -25,7 +25,7 @@ object dataFrame {
     }
     //I feel sooooooooooooooooooooo charming!
   }
-  class NumberSeries[T <% Double: Numeric](Type: NumScalaType[T])(source: Vector[Any], index: Boolean = false) {
+  class NumericSeries[T <% Double: Numeric](Type: NumScalaType[T])(source: Vector[Any], index: Boolean = false) {
     var name: String = ""
     val data: Vector[T] = if (source.length == 0) { name = "empty"; Vector[T]() }
     else
