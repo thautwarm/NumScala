@@ -1,5 +1,6 @@
 package util
 object config {
+  
   case class NumScalaType[T](arg:String)
   val NSInt=NumScalaType[Int]("Int")
   val NSDouble=NumScalaType[Double]("Double")

@@ -24,8 +24,8 @@ object matLib {
             }
           }
       }
-    var XIndex = IndexedSeq.range(0, Row)
-    var YIndex = IndexedSeq.range(0, Col)
+    private var XIndex = IndexedSeq.range(0, Row)
+    private var YIndex = IndexedSeq.range(0, Col)
     var indexByRow = true
 
     def row() = if (indexByRow) Row else Col
