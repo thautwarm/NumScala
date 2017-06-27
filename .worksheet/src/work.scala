@@ -15,12 +15,8 @@ object work{
 	
 	scala.math.Integral
 	
-	import linalg.matLib.Matrix;System.out.println("""res0: math.Integral.type = """ + $show(res$0));$skip(100); 
-	
-	val a = new Matrix[Double](seq(seq(1,2,5,6,10),seq(0,5,9,20,-5)));System.out.println("""a  : linalg.matLib.Matrix[Double] = """ + $show(a ));$skip(12); val res$1 = 
-	a.loc(1,1);System.out.println("""res1: Double = """ + $show(res$1));$skip(16); val res$2 = 
-	a.loc(15)(1,1);System.out.println("""res2: <error> = """ + $show(res$2));$skip(12); val res$3 = 
-	a.loc(1,1);System.out.println("""res3: Double = """ + $show(res$3))}
-		
+  import linalg.matLib.Matrix;System.out.println("""res0: math.Integral.type = """ + $show(res$0));$skip(97); 
+  val a = new Matrix[Int](seq(seq(1,2,5,6,10),seq(0,5,9,20,-5)));System.out.println("""a  : linalg.matLib.Matrix[Int] = """ + $show(a ));$skip(38); 
+ 	println(a.loc2d(seq(1,1),seq(1,1)))}
 		
 }

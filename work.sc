@@ -11,16 +11,13 @@ object work{
           (1 to cnt) foreach (_ => call)
           
            System.currentTimeMillis - start
-       }
+       }                                          //> time: (cnt: Int)(call: => Unit)Long
 	
-	scala.math.Integral
+	scala.math.Integral                       //> res0: math.Integral.type = scala.math.Integral$@c818063
 	
-	import linalg.matLib.Matrix
-	
-	val a = new Matrix[Double](seq(seq(1,2,5,6,10),seq(0,5,9,20,-5)))
-	a.loc(1,1)
-	a.loc(15)(1,1)
-	a.loc(1,1)
-		
+  import linalg.matLib.Matrix
+  val a = new Matrix[Int](seq(seq(1,2,5,6,10),seq(0,5,9,20,-5)))
+                                                  //> a  : linalg.matLib.Matrix[Int] = linalg.matLib$Matrix@7c29daf3
+ 	println(a.loc2d(seq(1,1),seq(1,1)))       //> ArrayBuffer(ArrayBuffer(5, 5), ArrayBuffer(5, 5))
 		
 }
