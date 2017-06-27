@@ -140,12 +140,6 @@ object matLib {
           }
       }
     
-//    
-//    
-//    private def updateData[INDEX<%IndexedSeq[Int]](Rows:INDEX, Cols:Int,changeValue:T):Unit={
-//          val RowData = c apply RowIdx
-//          Cols map (RowData update (_,changeValue) )
-//    }    
     
 
     
@@ -165,7 +159,7 @@ object matLib {
     
     // SET from  Matrix[T]
     def loc[INDEX<%IndexedSeq[Int]]
-    (rows: INDEX, cols: INDEX)(changeValue:Matrix[T]): Unit = {
+    (changeValue:Matrix[T])(rows: INDEX, cols: INDEX): Unit = {
       /*     This is the origin version 
  			*     
       {
@@ -186,12 +180,12 @@ object matLib {
     
     // SET from  IndexedSeq[IndexedSeq[T]]
     def loc[INDEX<%IndexedSeq[Int],MAT<%IndexedSeq[IndexedSeq[T]]]
-    (rows: INDEX, cols: INDEX)(changeValue:MAT): Unit = {
+    (changeValue:MAT)(rows: INDEX, cols: INDEX): Unit = {
       if (indexByRow) updateData(rows,cols, changeValue)
       else            updateData(cols,rows, changeValue)
     }
     def loc[INDEX<%IndexedSeq[Int]]
-    (rows: INDEX, cols: INDEX)(changeValue:T): Unit = {
+    (changeValue:T)(rows: INDEX, cols: INDEX): Unit = {
       if (indexByRow) updateData(rows,cols, changeValue)
       else            updateData(cols,rows, changeValue)
     }
@@ -211,13 +205,13 @@ object matLib {
     
     //SET
     def loc[INDEX<%IndexedSeq[Int],VEC<%IndexedSeq[T]]
-    (rowidx: Int, cols: INDEX )(changeValue:VEC): Unit = {
+    (changeValue:VEC)(rowidx: Int, cols: INDEX ): Unit = {
       if (indexByRow) updateData(rowidx, cols, changeValue)
                  else updateData(cols, rowidx, changeValue)
     }
     
     def loc[INDEX<%IndexedSeq[Int]]
-    (rowidx: Int, cols: INDEX )(changeValue:T): Unit = {
+    (changeValue:T)(rowidx: Int, cols: INDEX ): Unit = {
       if (indexByRow) updateData(rowidx, cols, changeValue)
                  else updateData(cols, rowidx, changeValue)
     }
@@ -235,13 +229,13 @@ object matLib {
     //SET
     
     def loc[INDEX<%IndexedSeq[Int],VEC<%IndexedSeq[T]]
-    (rows:INDEX, colidx: Int )(changeValue:VEC): Unit = {
+    (changeValue:VEC)(rows:INDEX, colidx: Int ): Unit = {
       if (indexByRow) updateData(rows, colidx, changeValue)
                  else updateData(colidx, rows, changeValue)
     }
     
     def loc[INDEX<%IndexedSeq[Int]]
-    (rows:INDEX, colidx: Int )(changeValue:T): Unit = {
+    (changeValue:T)(rows:INDEX, colidx: Int ): Unit = {
       if (indexByRow) updateData(rows, colidx, changeValue)
                  else updateData(colidx, rows, changeValue)
     }
@@ -258,7 +252,7 @@ object matLib {
     }
     
     //SET
-    def loc(rowidx: Int, colidx: Int)(changeValue:T): Unit= {
+    def loc(changeValue:T)(rowidx: Int, colidx: Int): Unit= {
       if (indexByRow) updateData(rowidx, colidx, changeValue)
                  else updateData(colidx, rowidx, changeValue)
     }
