@@ -9,11 +9,14 @@ import java.lang.invoke.LambdaForm
 object dataFrame {
   class LiteralSeries(source: Vector[Any], index: Boolean = false) {
     var name: String = ""
-    val data: Vector[String] = if (source.length == 0) { name = "empty"; Vector[String]() }
-    else {
-      name = source.head.toString
-      source.tail.map(_.toString)
-    }
+    val data: Vector[String] =
+      if (source.length == 0) { name = "empty"; Vector[String]() }
+      else {
+        (index match {
+          case true => name = source.head.toString ; source.tail
+          case false => name = "unname"; source
+         }) then (_.map(_.toString))
+      }
     def unique():Set[String]={
       data.toSet
     }

@@ -2,6 +2,8 @@ package Test
 import user.dataFrame.{NumericSeries,LiteralSeries}
 import util.fileDeal.csv
 import util.config.{ NSInt, NSLong, NSDouble, NSString }
+import scala.reflect.ClassTag
+
 object Test extends App {
   val path = raw"H:\Kaggle\TitanicDisaster\test.csv"
   val all = csv.read(path)
@@ -32,5 +34,13 @@ object Test extends App {
   ////     println( time(10)(a.par map(_+1)) )
 
   //> foo: [T](l: List[T])(implicit evidence$2: Numeric[T])Unit
-
+ 
+    def f[T:ClassTag](arg:Any){
+      ClassTag match{
+        case ClassTag.Int=>arg.asInstanceOf[Int]
+      }
+  }
+        
+    
+  
 }
