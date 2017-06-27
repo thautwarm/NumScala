@@ -12,11 +12,14 @@ object matLib {
   def GetShape[T, VECS <: IndexedSeq[IndexedSeq[T]]](vecs: VECS): (Int, Int) = {
     (vecs.length, vecs.head.length)
   }
-  case class NumScalaSetManager(method: String)
-  case class NumScalaGetManager(method: String)
+  
+  case class NumScalaSetManager(method: String ="")
+  case class NumScalaGetManager(method: String ="")
   val SET = NumScalaSetManager("SET")
   val GET = NumScalaSetManager("GET")
-
+  def UnNameGet() = NumScalaGetManager()
+  def UnNameSet() = NumScalaSetManager()
+  
   class Matrix[T](source: IndexedSeq[IndexedSeq[T]], checkAndPar: (Boolean, Boolean) = (true, true)) {
 
     class NumScalaMatrixSetManager

@@ -40,11 +40,12 @@ object Test2 {
   import linalg.matLib.NumScalaGetManager
   val Get = NumScalaGetManager("method1")
 
+  
   val a = new Matrix[Int](seq(seq(1,2,3,4,5),seq(6,7,8,9,10),seq(-1,-2,-3,-4,-5)))
   
-  println(a.loc(Get,1,1))
-  println(a.selectData(0, 0))
-  println(a.c)
+  println(a.loc(Get,seq(1,2),seq(1,2)).get)
+  println(a.col)
+  println(a.loc(NumScalaGetManager(), seq(0,1),seq(1,2)).get)
   
 //  	val mat = new Matrix( IndexedSeq(IndexedSeq(1,5),IndexedSeq(3,2) ))
 //    val c= mat.c

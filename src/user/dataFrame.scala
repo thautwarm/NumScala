@@ -1,13 +1,25 @@
 package user
 import scala.language.implicitConversions
-import util.config.Dict
-import util.config.{ NSInt, NSDouble, NSString, NSLong, NumScalaType }
+import scala.reflect.{ClassTag,classTag}
 import util.config._
 import util.baseCalc
 import math.pow
-import java.lang.invoke.LambdaForm
+
+
+
 object dataFrame {
-  class LiteralSeries(source: Vector[Any], index: Boolean = false) {
+  abstract class Series[T]{
+     var name:String
+     val data:Vector[T]
+  }
+  
+  trait countable[T] extends Series[T]{
+    def count (f:T=>Boolean):Int=data.count(f)
+    def frequency [K](f:T=>K):Map[K,Double]=data.groupBy(f).mapValues((x:Vector[T])=> 1.0*x.length/data.length)
+    def unique ():Set[T]=data.toSet
+  }
+  
+  class LiteralSeries(source: Vector[Any], index: Boolean = false) extends Series[String] with countable[String] {
     var name: String = ""
     val data: Vector[String] =
       if (source.length == 0) { name = "empty"; Vector[String]() }
@@ -17,18 +29,9 @@ object dataFrame {
           case false => name = "unname"; source
          }) then (_.map(_.toString))
       }
-    def unique():Set[String]={
-      data.toSet
-    }
-    def count(f:String=>Boolean):Int={
-      data.count(f)
-    }
-    def frequency[K](f:String=>K):Map[K,Double]={
-       data.groupBy(f).mapValues((x:Vector[String])=> 1.0*x.length/data.length)
-    }
     //I feel sooooooooooooooooooooo charming!
   }
-  class NumericSeries[T <% Double: Numeric](Type: NumScalaType[T])(source: Vector[Any], index: Boolean = false) {
+  class NumericSeries[T <% Double: Numeric:ClassTag](source: Vector[Any], index: Boolean = false) extends countable[T]{
     var name: String = ""
     val data: Vector[T] = if (source.length == 0) { name = "empty"; Vector[T]() }
     else
@@ -37,11 +40,10 @@ object dataFrame {
           name = source.head.toString; source.tail
         case false => name = "unname"; source
       }) then {
-        Type match {
-          case NSInt    => _.map(_.toString then baseCalc.Str2Int).asInstanceOf[Vector[T]]
-          case NSDouble => _.map(_.toString then baseCalc.Str2Double).asInstanceOf[Vector[T]]
-          case NSString => _.map(_.toString).asInstanceOf[Vector[T]]
-          case NSLong   => _.map(_.toString then baseCalc.Str2Long).asInstanceOf[Vector[T]]
+        classTag[T] match {
+          case ClassTag.Int    => _.map(_.toString then baseCalc.Str2Int).asInstanceOf[Vector[T]]
+          case ClassTag.Double => _.map(_.toString then baseCalc.Str2Double).asInstanceOf[Vector[T]]
+          case ClassTag.Long   => _.map(_.toString then baseCalc.Str2Long).asInstanceOf[Vector[T]]
         }
       }
     var nanNum = data.count((x: T) => x == null)
